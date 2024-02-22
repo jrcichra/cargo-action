@@ -65,6 +65,10 @@ runs:
       if: inputs.use-cross == 'true'
       run: |
         # Install cross
+        EXISTS=$(command -v cross >/dev/null 2>&1)
+        if [[ "$EXISTS" == "0" ];then
+        exit 0
+        fi
         if [[ -n "${{inputs.cross-version}}" ]]; then
           if [[ "${{inputs.cross-version}}" == "main" ]]; then
             cargo install cross --git https://github.com/cross-rs/cross --branch main
